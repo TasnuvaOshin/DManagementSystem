@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <group
+        android:id="@+id/grp1"
+        android:checkableBehavior="single"
+
+        >
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Home"
+            tools:ignore="HardcodedText">
+
+
+        </item>
+    </group>
+    <group
+        android:id="@+id/grp2"
+        android:checkableBehavior="single"
+
+        >
+
+
+        <item
+
+            android:id="@+id/complete"
+            android:icon="@drawable/ic_arrow_forward_black_24dp"
+            android:title="Completed Delivery"
+            tools:ignore="HardcodedText">
+
+
+        </item>
+
+        <item
+            android:id="@+id/reschedule"
+            android:icon="@drawable/ic_arrow_forward_black_24dp"
+            android:title="Rescheduled Delivery"
+            tools:ignore="HardcodedText">
+
+
+        </item>
+
+        <item
+            android:id="@+id/cancel"
+            android:icon="@drawable/ic_arrow_forward_black_24dp"
+            android:title="Canceled Delivery"
+            tools:ignore="HardcodedText">
+
+
+        </item>
+
+        <item
+            android:id="@+id/returned"
+            android:icon="@drawable/ic_arrow_forward_black_24dp"
+            android:title="Returned Delivery"
+            tools:ignore="HardcodedText">
+
+
+        </item>
+    </group>
+</menu>

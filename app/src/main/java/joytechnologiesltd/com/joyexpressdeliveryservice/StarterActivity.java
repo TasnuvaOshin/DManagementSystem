@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import joytechnologiesltd.com.joyexpressdeliveryservice.Admin.AdminHomeFragment;
 import joytechnologiesltd.com.joyexpressdeliveryservice.Auth.AuthFragment;
 import joytechnologiesltd.com.joyexpressdeliveryservice.Auth.SplashFragment;
 import joytechnologiesltd.com.joyexpressdeliveryservice.HomePage.HomeFragment;
@@ -48,7 +49,7 @@ public class StarterActivity extends AppCompatActivity {
 
             if (checkLocationPermission()) {
                 //to set the page
-                SetFrame(new SplashFragment());
+                SetFrame(new AdminHomeFragment());
             }
         } else {
             progressDialog.setCanceledOnTouchOutside(false);

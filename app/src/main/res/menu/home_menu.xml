@@ -25,7 +25,7 @@
         <item
 
             android:id="@+id/complete"
-            android:icon="@drawable/ic_arrow_forward_black_24dp"
+            android:icon="@drawable/ic_stop_black_24dp"
             android:title="Completed Delivery"
             tools:ignore="HardcodedText">
 
@@ -34,7 +34,7 @@
 
         <item
             android:id="@+id/reschedule"
-            android:icon="@drawable/ic_arrow_forward_black_24dp"
+            android:icon="@drawable/ic_stop_black_24dp"
             android:title="Rescheduled Delivery"
             tools:ignore="HardcodedText">
 
@@ -43,7 +43,7 @@
 
         <item
             android:id="@+id/cancel"
-            android:icon="@drawable/ic_arrow_forward_black_24dp"
+            android:icon="@drawable/ic_stop_black_24dp"
             android:title="Canceled Delivery"
             tools:ignore="HardcodedText">
 
@@ -52,11 +52,26 @@
 
         <item
             android:id="@+id/returned"
-            android:icon="@drawable/ic_arrow_forward_black_24dp"
+            android:icon="@drawable/ic_stop_black_24dp"
             android:title="Returned Delivery"
             tools:ignore="HardcodedText">
 
 
         </item>
+    </group>
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single"
+        >
+        <item
+
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_donut_small_black_24dp"
+            android:title="Log Out"
+            tools:ignore="HardcodedText">
+
+
+        </item>
+
     </group>
 </menu>

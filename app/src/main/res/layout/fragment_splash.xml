@@ -3,30 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Auth.SplashFragment"
     android:background="#FFFFFF"
-    >
+    tools:context=".Auth.SplashFragment">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Joy Express"
-        android:textStyle="bold"
-        android:textSize="27sp"
+        android:layout_marginTop="150dp"
         android:fontFamily="sans-serif-condensed-light"
+        android:text="Joy Express"
         android:textAlignment="center"
-android:layout_marginTop="150dp"
-        />
-    <de.hdodenhof.circleimageview.CircleImageView
+        android:textSize="27sp"
+        android:textStyle="bold" />
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="130dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/rider" />
+        android:src="@drawable/icon" />
+
     <ProgressBar
         android:id="@+id/progressBar1"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="100"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:max="100" />
 </RelativeLayout>

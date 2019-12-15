@@ -3,6 +3,7 @@ package joytechnologiesltd.com.joyexpressdeliveryservice.HomePage;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,8 +39,10 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,26 +57,31 @@ import joytechnologiesltd.com.joyexpressdeliveryservice.APICALL.HomeDataAdapter;
 import joytechnologiesltd.com.joyexpressdeliveryservice.APICALL.HomeDataSet;
 import joytechnologiesltd.com.joyexpressdeliveryservice.HomePage.Pages.CompleteTaskFragment;
 import joytechnologiesltd.com.joyexpressdeliveryservice.R;
+import joytechnologiesltd.com.joyexpressdeliveryservice.StarterActivity;
 
 
 public class HomeFragment extends Fragment {
     public RecyclerView recyclerView;
     public ArrayList<HomeDataSet> arrayList;
-    private ImageButton drawerbutton,search;
+    private ImageButton drawerbutton, search;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private CompleteTaskFragment completeTaskFragment;
-       private ImageView date;
-       private EditText et_date;
+    private ImageView date;
+    private EditText et_date;
     SharedPreferences sharedPrefs;
     private SwipeRefreshLayout swipeRefreshLayout;
     private String driver_id;
 
     public HomeDataAdapter homeDataAdapter;
     Bundle bundle;
+    private String currentLang, currentLong;
 
     int mYear, mMonth, mDay;
     Calendar c;
+   private String Cdate;
+   private String Ctime;
+
     @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,6 +103,12 @@ public class HomeFragment extends Fragment {
         String name = sharedPrefs.getString("driver_name", "defaultValue");
         String image = sharedPrefs.getString("img", "defaultValue");
         driver_id = sharedPrefs.getString("driver_id", "defaultValue");
+        currentLang = sharedPrefs.getString("currentLang", "defaultValue");
+        currentLong = sharedPrefs.getString("currentLong", "defaultValue");
+        Cdate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        Ctime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+
+        Log.d("d",Cdate+ " and time  "+Ctime);
         tv.setText(name);
         Log.d("img", image);
         Picasso.get().load("http://x.joytechnologieslimited.com/" + image).fit().into(ImageView);
@@ -108,9 +122,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         jsonCall jsonCall1 = new jsonCall();
-        jsonCall1.execute("http://x.joytechnologieslimited.com/Api/orders/get_data.php?driver_id="+ driver_id);
-
-
+        jsonCall1.execute("http://x.joytechnologieslimited.com/Api/orders/get_data.php?driver_id=" + driver_id+"&current_lat="+currentLang+"&current_lon="+currentLong+"&cdate="+Cdate+"&ctime="+Ctime);
 
 
         search = view.findViewById(R.id.search);
@@ -137,18 +149,18 @@ public class HomeFragment extends Fragment {
 
                                 int month = monthOfYear + 1; // month count given less one e.g. august then give month no 7
 
-                                String dayStr   = String.valueOf(dayOfMonth);
+                                String dayStr = String.valueOf(dayOfMonth);
                                 String monthStr = String.valueOf(month);
 
                                 if (dayStr.length() == 1)
-                                    dayStr = "0"+dayStr;
+                                    dayStr = "0" + dayStr;
 
                                 if (monthStr.length() == 1)
-                                    monthStr = "0"+monthStr;
+                                    monthStr = "0" + monthStr;
 
                                 // dd/mm/yyyy format set.
-                            //    et_date.setText(dayStr+"/"+monthStr+"/"+year);
-                                et_date.setText(year+"-"+monthStr+"-"+dayStr);
+                                //    et_date.setText(dayStr+"/"+monthStr+"/"+year);
+                                et_date.setText(year + "-" + monthStr + "-" + dayStr);
 
 
                             }
@@ -160,12 +172,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-
-
-
-
-
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @SuppressLint("NewApi")
             @Override
@@ -173,7 +179,7 @@ public class HomeFragment extends Fragment {
 
                 arrayList.clear();
                 jsonCall jsonCall1 = new jsonCall();
-                jsonCall1.execute("http://x.joytechnologieslimited.com/Api/orders/get_data.php?driver_id="+ driver_id);
+                jsonCall1.execute("http://x.joytechnologieslimited.com/Api/orders/get_data.php?driver_id=" + driver_id+"&current_lat="+currentLang+"&current_lon="+currentLong+"&cdate="+Cdate+"&ctime="+Ctime);
 
             }
         });
@@ -191,31 +197,27 @@ public class HomeFragment extends Fragment {
         });
 
 
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Searching", Toast.LENGTH_SHORT).show();
+                String value = et_date.getText().toString();
 
-search.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        Toast.makeText(getActivity(), "Searching", Toast.LENGTH_SHORT).show();
-        String value = et_date.getText().toString();
+                if (TextUtils.isEmpty(value)) {
+                    Toast.makeText(getActivity(), "Please Write Something to Search", Toast.LENGTH_SHORT).show();
+                } else {
+                    arrayList.clear();
+                    jsonCall jsonCall1 = new jsonCall();
+                    jsonCall1.execute("http://x.joytechnologieslimited.com/Api/orders/get_datewise.php?driver_id=" + driver_id + "&date=" + value);
 
-        if(TextUtils.isEmpty(value)){
-            Toast.makeText(getActivity(), "Please Write Something to Search", Toast.LENGTH_SHORT).show();
-        }else {
-            arrayList.clear();
-            jsonCall jsonCall1 = new jsonCall();
-            jsonCall1.execute("http://x.joytechnologieslimited.com/Api/orders/get_datewise.php?driver_id="+driver_id+"&date="+value);
-
-        }
-    }
-});
-
-
+                }
+            }
+        });
 
 
         SetupNavMenu();
         return view;
     }
-
 
 
     private void SetupNavMenu() {
@@ -256,6 +258,14 @@ search.setOnClickListener(new View.OnClickListener() {
                         break;
 
 
+                    case R.id.logout:
+
+                        Intent intent = new Intent(getActivity(), StarterActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        getActivity().startActivity(intent);
+                        break;
+
+
                 }
 
                 return false;
@@ -275,6 +285,21 @@ search.setOnClickListener(new View.OnClickListener() {
         HttpURLConnection httpURLConnection;
         BufferedReader bufferedReader;
         String mainfile;
+        String id;
+        String driver_id;
+        String delivery_id;
+        String merchant_id;
+        String status;
+        String created_at;
+        String rec_name;
+        String rec_number;
+        String rec_address;
+        String rec_zone;
+        String amount;
+        String instruction;
+        String merchant_name;
+        String merchant_email;
+        String merchant_phone;
 
         @Override
         protected void onPostExecute(String aVoid) {
@@ -282,10 +307,10 @@ search.setOnClickListener(new View.OnClickListener() {
                 swipeRefreshLayout.setRefreshing(false);
             }
 
-            if(arrayList.size() > 0){
+            if (arrayList.size() > 0) {
                 homeDataAdapter = new HomeDataAdapter(getActivity(), arrayList);
                 recyclerView.setAdapter(homeDataAdapter);
-            }else{
+            } else {
                 new AlertDialog.Builder(getActivity())
                         .setTitle("No History Available")
                         .setMessage("no data available to show")
@@ -338,25 +363,25 @@ search.setOnClickListener(new View.OnClickListener() {
 
                     JSONObject child = parent.getJSONObject(i);
 
-                    String id = child.getString("id");
-                    Log.d("id", id);
-                    String driver_id = child.getString("driver_id");
-                    String delivery_id = child.getString("delivery_id");
-                    String merchant_id = child.getString("merchant_id");
-                    String status = child.getString("status");
-                    String created_at = child.getString("created_at");
-                    String rec_name = child.getString("rec_name");
-                    String rec_number = child.getString("rec_number");
-                    String rec_address = child.getString("rec_address");
-                    String rec_zone = child.getString("rec_zone");
-                    String amount = child.getString("amount");
-                    String instruction = child.getString("instruction");
-                    String merchant_name = child.getString("merchant_name");
-                    String merchant_email = child.getString("merchant_email");
-                    String merchant_phone = child.getString("merchant_phone");
+                    id = child.getString("id");
+                    driver_id = child.getString("driver_id");
+                    delivery_id = child.getString("delivery_id");
+                    merchant_id = child.getString("merchant_id");
+                    status = child.getString("status");
+                    created_at = child.getString("created_at");
+                    rec_name = child.getString("rec_name");
+                    rec_number = child.getString("rec_number");
+                    rec_address = child.getString("rec_address");
+                    rec_zone = child.getString("rec_zone");
+                    amount = child.getString("amount");
+                    instruction = child.getString("instruction");
+                    merchant_name = child.getString("merchant_name");
+                    merchant_email = child.getString("merchant_email");
+                    merchant_phone = child.getString("merchant_phone");
 
                     arrayList.add(new HomeDataSet(id, driver_id, delivery_id, merchant_id, status, created_at, rec_name, rec_number, rec_address, rec_zone, amount, instruction, merchant_name, merchant_email, merchant_phone));
                     i++;
+
                 }
 
 

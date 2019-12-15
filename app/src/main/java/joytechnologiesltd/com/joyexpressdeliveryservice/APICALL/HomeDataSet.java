@@ -17,6 +17,24 @@ public String id;
     public String merchant_name;
     public String merchant_email;
     public String merchant_phone;
+    public String current_lat;
+    public String current_lon;
+
+    public String getCurrent_lat() {
+        return current_lat;
+    }
+
+    public void setCurrent_lat(String current_lat) {
+        this.current_lat = current_lat;
+    }
+
+    public String getCurrent_lon() {
+        return current_lon;
+    }
+
+    public void setCurrent_lon(String current_lon) {
+        this.current_lon = current_lon;
+    }
 
     public String getId() {
         return id;
@@ -141,7 +159,7 @@ public String id;
     public HomeDataSet() {
     }
 
-    public HomeDataSet(String id, String driver_id, String delivery_id, String merchant_id, String status, String created_at, String rec_name, String rec_number, String rec_address, String rec_zone, String amount, String instruction, String merchant_name, String merchant_email, String merchant_phone) {
+    public HomeDataSet(String id, String driver_id, String delivery_id, String merchant_id, String status, String created_at, String rec_name, String rec_number, String rec_address, String rec_zone, String amount, String instruction, String merchant_name, String merchant_email, String merchant_phone,String current_lat,String current_lon) {
         this.id = id;
         this.driver_id = driver_id;
         this.delivery_id = delivery_id;
@@ -157,5 +175,7 @@ public String id;
         this.merchant_name = merchant_name;
         this.merchant_email = merchant_email;
         this.merchant_phone = merchant_phone;
+        this.current_lat = current_lat;
+        this.current_lon = current_lon;
     }
 }

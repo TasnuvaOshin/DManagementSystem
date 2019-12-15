@@ -72,6 +72,7 @@ public class HomeFragment extends Fragment {
     SharedPreferences sharedPrefs;
     private SwipeRefreshLayout swipeRefreshLayout;
     private String driver_id;
+    private  String dlat,dlog;
 
     public HomeDataAdapter homeDataAdapter;
     Bundle bundle;
@@ -378,8 +379,10 @@ public class HomeFragment extends Fragment {
                     merchant_name = child.getString("merchant_name");
                     merchant_email = child.getString("merchant_email");
                     merchant_phone = child.getString("merchant_phone");
+                    dlat = child.getString("current_lat");
+                    dlog = child.getString("current_lon");
 
-                    arrayList.add(new HomeDataSet(id, driver_id, delivery_id, merchant_id, status, created_at, rec_name, rec_number, rec_address, rec_zone, amount, instruction, merchant_name, merchant_email, merchant_phone));
+                    arrayList.add(new HomeDataSet(id, driver_id, delivery_id, merchant_id, status, created_at, rec_name, rec_number, rec_address, rec_zone, amount, instruction, merchant_name, merchant_email, merchant_phone,dlat,dlog));
                     i++;
 
                 }

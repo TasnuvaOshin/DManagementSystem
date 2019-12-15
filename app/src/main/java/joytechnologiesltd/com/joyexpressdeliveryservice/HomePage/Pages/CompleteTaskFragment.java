@@ -168,8 +168,11 @@ public class CompleteTaskFragment extends Fragment {
                     String merchant_name = child.getString("merchant_name");
                     String merchant_email = child.getString("merchant_email");
                     String merchant_phone = child.getString("merchant_phone");
+                    String dlat = child.getString("current_lat");
+                    String dlon = child.getString("current_lon");
 
-                    arrayList.add(new HomeDataSet(id, driver_id, delivery_id, merchant_id, status, created_at, rec_name, rec_number, rec_address, rec_zone, amount, instruction, merchant_name, merchant_email, merchant_phone));
+
+                    arrayList.add(new HomeDataSet(id, driver_id, delivery_id, merchant_id, status, created_at, rec_name, rec_number, rec_address, rec_zone, amount, instruction, merchant_name, merchant_email, merchant_phone,dlat,dlon));
                     i++;
                 }
 
